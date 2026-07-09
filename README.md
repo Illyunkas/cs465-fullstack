@@ -24,9 +24,16 @@ npm start
 The application will be accessible at http://localhost:3000.
 
 ## Dependencies
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "hbs": "~4.0.4",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+This project relies on the following packages:
+
+express: The web application framework for Node.js.
+
+hbs: The Express view engine for Handlebars.
+
+cookie-parser: Middleware to parse the Cookie header and populate req.cookies.
+
+morgan: HTTP request logger middleware for Node.js.
+
+http-errors: Helper for creating HTTP errors for Express.
+
+These dependencies will be automatically installed when you run npm install during the setup process.
