@@ -24,4 +24,9 @@ npm start
 The application will be accessible at http://localhost:3000.
 
 ## Dependencies
-This project uses standard full-stack dependencies.
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
