@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Gale Reef Adventure",
+    "image": "/images/reef1.jpg",
+    "description": "Gale Reef Adventure: Explore the reefs on a guided snorkeling tour.",
+    "tags": "Reef, Snorkeling, Sunset",
+    "price": "$91",
+    "date": "31-Dec-2024"
+  },
+  {
+    "name": "Dawson’s Reef Escape",
+    "image": "/images/reef2.jpg",
+    "description": "Dawson’s Reef Escape: Take in the stunning coral and marine life.",
+    "tags": "Reef, Boat Tour, Relax",
+    "price": "$95",
+    "date": "31-Dec-2024"
+  },
+  {
+    "name": "Claire’s Reef Expedition",
+    "image": "/images/reef3.jpg",
+    "description": "Claire’s Reef Expedition: Dive deeper into an unforgettable reef adventure.",
+    "tags": "Reef, Diving, Adventure",
+    "price": "$99",
+    "date": "31-Dec-2024"
+  }
+]
