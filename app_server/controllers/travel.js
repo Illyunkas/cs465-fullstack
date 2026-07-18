@@ -1,6 +1,11 @@
-/* GET travel view */
-const travel = (req, res) => {
-    res.render('travel', { title: 'Travlr Getaways' });
+var fs = require('fs');
+
+var travel = (req, res) => {
+    var trips = JSON.parse(fs.readFileSync('./data/trips.json', 'utf8'));
+    res.render('travel', {
+        title: 'Travlr Travel',
+        trips: trips,
+    });
 };
 
 module.exports = {
