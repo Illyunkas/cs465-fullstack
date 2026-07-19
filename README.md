@@ -20,8 +20,17 @@ To run this project, you will need:
 
 ## Running the Project
 To start the application, run:
-npm start
+
+    npm start
+
 The application will be accessible at http://localhost:3000.
+
+## Admin Access
+The project includes a simple admin interface for managing trips. After starting the application, open your browser and go to:
+
+    http://localhost:3000/admin/trips
+
+From that page you can add a new trip and edit existing trip entries.
 
 ## Dependencies
 This project relies on the following packages:
