@@ -32,6 +32,8 @@ The project includes a simple admin interface for managing trips. After starting
 
 From that page you can add a new trip and edit existing trip entries.
 
+Admin authorization is not currently implemented, but I plan to add secure login and access control for admin management in a future update.
+
 ## Dependencies
 This project relies on the following packages:
 
