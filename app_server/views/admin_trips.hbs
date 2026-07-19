@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="background">
+    <div id="page">
+      <div id="header">
+        <div id="logo">
+          <a href="/"><img src="/images/logo.png" alt="LOGO" height="100" width="200"></a>
+        </div>
+        <div id="navigation">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/travel">Travel</a></li>
+            <li><a href="/admin/trips">Admin</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="contents">
+        <div class="box">
+          <div class="body">
+            <h1>{{title}}</h1>
+            <p>Use the form to add a unique trip or select an existing trip to edit.</p>
+            <p><a href="/admin/trips/new">Add New Trip</a></p>
+            <ul id="sites">
+              {{#each trips}}
+              <li>
+                <img src="{{image}}" alt="{{name}}" height="120">
+                <h2>{{name}}</h2>
+                <p>{{description}}</p>
+                <p>Tags: {{tags}}</p>
+                <span class="price">Price: {{price}}</span>
+                <span class="date">Date: {{date}}</span>
+                <p><a href="/admin/trips/{{@index}}/edit">Edit Trip</a></p>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

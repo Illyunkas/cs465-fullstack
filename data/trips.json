@@ -22,5 +22,13 @@
     "tags": "Reef, Diving, Adventure",
     "price": "$99",
     "date": "31-Dec-2024"
+  },
+  {
+    "name": "Volcanic Sky Safari",
+    "image": "/images/volcano.jpg",
+    "description": "Volcanic Sky Safari: Fly over an active volcano, explore glowing lava fields, and finish the day in a luxury cliffside lodge.",
+    "tags": "Volcano, Helicopter, Adventure, Lava",
+    "price": "$229",
+    "date": "15-NOV-2026"
   }
 ]

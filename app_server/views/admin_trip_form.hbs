@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="background">
+    <div id="page">
+      <div id="header">
+        <div id="logo">
+          <a href="/"><img src="/images/logo.png" alt="LOGO" height="100" width="200"></a>
+        </div>
+        <div id="navigation">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/travel">Travel</a></li>
+            <li><a href="/admin/trips">Admin</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="contents">
+        <div class="box">
+          <div class="body">
+            <h1>{{title}}</h1>
+            <form action="{{action}}" method="post">
+              <table>
+                <tr><td>Name:</td><td><input type="text" name="name" value="{{trip.name}}" required></td></tr>
+                <tr><td>Image URL:</td><td><input type="text" name="image" value="{{trip.image}}"></td></tr>
+                <tr><td>Description:</td><td><textarea name="description">{{trip.description}}</textarea></td></tr>
+                <tr><td>Tags:</td><td><input type="text" name="tags" value="{{trip.tags}}"></td></tr>
+                <tr><td>Price:</td><td><input type="text" name="price" value="{{trip.price}}"></td></tr>
+                <tr><td>Date:</td><td><input type="text" name="date" value="{{trip.date}}"></td></tr>
+                <tr><td colspan="2"><button type="submit">{{submitLabel}}</button></td></tr>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

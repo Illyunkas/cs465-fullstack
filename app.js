@@ -14,6 +14,7 @@ app.set('view engine', 'hbs');
 var travelRouter = require('./app_server/routes/travel'); 
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
+var adminRouter = require('./app_server/routes/admin');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/travel', travelRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/admin', adminRouter);
 
 
 
