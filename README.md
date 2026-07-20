@@ -26,19 +26,20 @@ Travlr Getaways is a Node.js and Express web application for browsing and managi
 ```text
 app.js
 app_api/
-   db.js
-   models/
-      trip.js
    controllers/
       trips.js
    routes/
       index.js
 app_server/
+   models/
+      db.js
+      travlr.js
+      seed.js
    controllers/
    routes/
    views/
 data/
-seed.js
+   trips.json
 ```
 
 ## Installation
@@ -49,14 +50,14 @@ npm install
 ```
 
 ## Configuration
-Set the MongoDB URI with an environment variable (optional if using local default).
+Set the MongoDB host with an environment variable (optional if using local default).
 
 ```bash
-export MONGODB_URI="mongodb://127.0.0.1:27017/travlr"
+export DB_HOST="127.0.0.1"
 ```
 
-Default URI (when `MONGODB_URI` is not set):
-`mongodb://127.0.0.1:27017/travlr`
+Default URI (when `DB_HOST` is not set):
+`mongodb://127.0.0.1/travlr`
 
 ## Running the Application
 ```bash
@@ -74,6 +75,9 @@ npm run seed
 ```
 
 This inserts four sample trips including Volcanic Sky Safari.
+
+Module 4 walkthrough note:
+- The seed script is located in `app_server/models/seed.js` and is executed with `node app_server/models/seed.js` (also available through `npm run seed`).
 
 ## API
 ### Get all trips
@@ -103,13 +107,13 @@ Run these checks after startup:
 ```bash
 curl http://localhost:3000/api/trips
 curl -I http://localhost:3000/travel
-mongosh travlr --eval "db.trips.find({}, {name:1, price:1, date:1}).pretty()"
+mongosh travlr --eval "db.trips.find({}, {code:1, name:1, length:1, start:1, resort:1, perPerson:1}).pretty()"
 ```
 
 Expected outcomes:
 - `/api/trips` returns trip records in JSON format.
 - `/travel` returns `HTTP/1.1 200 OK`.
-- `mongosh` output includes the seeded trip documents.
+- `mongosh` output includes the seeded trip documents with fields such as `code`, `name`, `length`, `start`, `resort`, and `perPerson`.
 
 ## Scripts
 - `npm start` - start the Express server.
