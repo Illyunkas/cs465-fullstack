@@ -4,10 +4,9 @@ var path = require('path');
 var hbs = require('hbs');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var db = require('./app_api/db');
+require('./app_server/models/db');
 
 var app = express();
-db.connect();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));

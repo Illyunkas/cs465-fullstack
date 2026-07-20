@@ -24,10 +24,12 @@
               <li>
                 <img src="{{image}}" alt="{{name}}" height="120">
                 <h2>{{name}}</h2>
+                <p>Code: {{code}}</p>
                 <p>{{description}}</p>
-                <p>Tags: {{tags}}</p>
-                <span class="price">Price: {{price}}</span>
-                <span class="date">Date: {{date}}</span>
+                <p>Length: {{length}}</p>
+                <p>Resort: {{resort}}</p>
+                <span class="price">Per Person: {{perPerson}}</span>
+                <span class="date">Start: {{start}}</span>
                 <p>
                   <a href="/admin/trips/{{_id}}/edit">Edit Trip</a> |
                   <form action="/admin/trips/{{_id}}/delete" method="post" onsubmit="return confirm('Delete this trip?');" style="display:inline;">

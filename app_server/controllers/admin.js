@@ -1,6 +1,6 @@
 var fs = require('fs');
 var path = require('path');
-var Trip = require('../../app_api/models/trip');
+var Trip = require('../models/travlr');
 
 var tripsFile = path.join(__dirname, '../../data/trips.json');
 var roomsFile = path.join(__dirname, '../../data/rooms.json');
@@ -53,12 +53,14 @@ var newTrip = (req, res) => {
 
 var createTrip = async (req, res) => {
   var newTrip = {
+    code: req.body.code || 'TRIP-NEW',
     name: req.body.name || 'New Trip',
+    length: req.body.length || '1 day',
+    start: req.body.start ? new Date(req.body.start) : new Date(),
+    resort: req.body.resort || 'TBD',
+    perPerson: req.body.perPerson || '$0',
     image: req.body.image || '/images/reef1.jpg',
     description: req.body.description || '',
-    tags: req.body.tags || '',
-    price: req.body.price || '$0',
-    date: req.body.date || '',
   };
   try {
     await Trip.create(newTrip);
@@ -73,6 +75,9 @@ var editTrip = async (req, res) => {
   if (!trip) {
     return res.status(404).send('Trip not found');
   }
+  if (trip.start) {
+    trip.startInput = new Date(trip.start).toISOString().slice(0, 10);
+  }
   res.render('admin_trip_form', {
     title: 'Edit Trip',
     action: '/admin/trips/' + req.params.id,
@@ -85,12 +90,14 @@ var updateTrip = async (req, res) => {
   var updated = await Trip.findByIdAndUpdate(
     req.params.id,
     {
+      code: req.body.code,
       name: req.body.name,
+      length: req.body.length,
+      start: req.body.start ? new Date(req.body.start) : undefined,
+      resort: req.body.resort,
+      perPerson: req.body.perPerson,
       image: req.body.image,
       description: req.body.description,
-      tags: req.body.tags,
-      price: req.body.price,
-      date: req.body.date,
     },
     { runValidators: true }
   );

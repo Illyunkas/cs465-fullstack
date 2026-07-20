@@ -20,12 +20,14 @@
             <h1>{{title}}</h1>
             <form action="{{action}}" method="post">
               <table>
+                <tr><td>Code:</td><td><input type="text" name="code" value="{{trip.code}}" required></td></tr>
                 <tr><td>Name:</td><td><input type="text" name="name" value="{{trip.name}}" required></td></tr>
+                <tr><td>Length:</td><td><input type="text" name="length" value="{{trip.length}}" required></td></tr>
+                <tr><td>Start Date:</td><td><input type="date" name="start" value="{{trip.startInput}}" required></td></tr>
+                <tr><td>Resort:</td><td><input type="text" name="resort" value="{{trip.resort}}" required></td></tr>
+                <tr><td>Per Person:</td><td><input type="text" name="perPerson" value="{{trip.perPerson}}" required></td></tr>
                 <tr><td>Image URL:</td><td><input type="text" name="image" value="{{trip.image}}"></td></tr>
                 <tr><td>Description:</td><td><textarea name="description">{{trip.description}}</textarea></td></tr>
-                <tr><td>Tags:</td><td><input type="text" name="tags" value="{{trip.tags}}"></td></tr>
-                <tr><td>Price:</td><td><input type="text" name="price" value="{{trip.price}}"></td></tr>
-                <tr><td>Date:</td><td><input type="text" name="date" value="{{trip.date}}"></td></tr>
                 <tr><td colspan="2"><button type="submit">{{submitLabel}}</button></td></tr>
               </table>
             </form>

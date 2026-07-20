@@ -1,4 +1,4 @@
-var Trip = require('../models/trip');
+var Trip = require('../../app_server/models/travlr');
 
 var tripsList = async function(req, res) {
   try {

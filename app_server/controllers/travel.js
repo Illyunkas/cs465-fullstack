@@ -1,4 +1,4 @@
-var Trip = require('../../app_api/models/trip');
+var Trip = require('../models/travlr');
 
 var travel = async (req, res) => {
     try {
