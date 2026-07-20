@@ -26,9 +26,7 @@ To start the application, run:
 The application will be accessible at http://localhost:3000.
 
 ## Admin Access
-The project includes a simple admin interface for managing trips. After starting the application, open your browser and go to:
-
-    http://localhost:3000/admin/trips
+The project includes a simple admin interface for managing trips. After starting the application, open your browser and go to http://localhost:3000/admin/trips
 
 From that page you can add a new trip and edit existing trip entries.
 
