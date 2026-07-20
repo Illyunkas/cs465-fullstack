@@ -20,12 +20,10 @@
             <h1>{{title}}</h1>
             <form action="{{action}}" method="post">
               <table>
-                <tr><td>Name:</td><td><input type="text" name="name" value="{{trip.name}}" required></td></tr>
-                <tr><td>Image URL:</td><td><input type="text" name="image" value="{{trip.image}}"></td></tr>
-                <tr><td>Description:</td><td><textarea name="description">{{trip.description}}</textarea></td></tr>
-                <tr><td>Tags:</td><td><input type="text" name="tags" value="{{trip.tags}}"></td></tr>
-                <tr><td>Price:</td><td><input type="text" name="price" value="{{trip.price}}"></td></tr>
-                <tr><td>Date:</td><td><input type="text" name="date" value="{{trip.date}}"></td></tr>
+                <tr><td>Name:</td><td><input type="text" name="name" value="{{meal.name}}" required></td></tr>
+                <tr><td>Image URL:</td><td><input type="text" name="image" value="{{meal.image}}"></td></tr>
+                <tr><td>Headline:</td><td><input type="text" name="headline" value="{{meal.headline}}"></td></tr>
+                <tr><td>Description:</td><td><textarea name="description">{{meal.description}}</textarea></td></tr>
                 <tr><td colspan="2"><button type="submit">{{submitLabel}}</button></td></tr>
               </table>
             </form>

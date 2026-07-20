@@ -1,17 +1,22 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var hbs = require('hbs');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var db = require('./app_api/db');
 
 var app = express();
+db.connect();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'hbs');
+hbs.registerPartials(path.join(__dirname, 'app_server', 'views', 'partials'));
 
 // added variable required "travelRouter"
 var travelRouter = require('./app_server/routes/travel'); 
+var apiRouter = require('./app_api/routes/index');
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var adminRouter = require('./app_server/routes/admin');
@@ -24,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // add app uses
 app.use('/travel', travelRouter);
+app.use('/api', apiRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);

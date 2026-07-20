@@ -1,48 +1,122 @@
-# CS-465 Full Stack Development I
+# Travlr Getaways (CS-465)
 
-This project was developed as part of the CS-465 Full Stack Development I course at Southern New Hampshire University.
+Travlr Getaways is a Node.js and Express web application for browsing and managing travel content. The project now includes MongoDB integration through Mongoose for trip data storage, schema validation, and API delivery.
 
-## Description
-This application is a full-stack web application that allows users to manage a travel agency database developed for CS-465.
+## Features
+- Server-rendered pages for Travel, Rooms, Meals, and supporting static content pages.
+- Admin trip management for creating and editing trip records.
+- MongoDB-backed trip model with validation.
+- JSON API endpoint for trip retrieval.
+- Seed script for loading sample data into MongoDB.
+
+## Tech Stack
+- Node.js
+- Express
+- Handlebars (`hbs`)
+- MongoDB
+- Mongoose
 
 ## Prerequisites
-To run this project, you will need:
-* Node.js
-* Git
+- Node.js 18+ (LTS recommended)
+- npm
+- MongoDB server (local or remote)
+- `mongosh` (for inspection/testing)
+
+## Project Structure
+```text
+app.js
+app_api/
+   db.js
+   models/
+      trip.js
+   controllers/
+      trips.js
+   routes/
+      index.js
+app_server/
+   controllers/
+   routes/
+   views/
+data/
+seed.js
+```
 
 ## Installation
-1. Clone the repository:
-   git clone https://github.com/Illyunkas/cs465-fullstack.git
-2. Navigate to the project directory:
-   cd cs465-fullstack
-3. Install the required dependencies:
-   npm install
+```bash
+git clone https://github.com/Illyunkas/cs465-fullstack.git
+cd cs465-fullstack/travlr
+npm install
+```
 
-## Running the Project
-To start the application, run:
+## Configuration
+Set the MongoDB URI with an environment variable (optional if using local default).
 
-    npm start
+```bash
+export MONGODB_URI="mongodb://127.0.0.1:27017/travlr"
+```
 
-The application will be accessible at http://localhost:3000.
+Default URI (when `MONGODB_URI` is not set):
+`mongodb://127.0.0.1:27017/travlr`
 
-## Admin Access
-The project includes a simple admin interface for managing trips. After starting the application, open your browser and go to http://localhost:3000/admin/trips
+## Running the Application
+```bash
+npm start
+```
 
-From that page you can add a new trip and edit existing trip entries.
+Application URL:
+`http://localhost:3000`
 
-Admin authorization is not currently implemented, but I plan to add secure login and access control for admin management in a future update.
+## Database Seeding
+Load sample trip data into MongoDB:
 
-## Dependencies
-This project relies on the following packages:
+```bash
+npm run seed
+```
 
-express: The web application framework for Node.js.
+This inserts four sample trips including Volcanic Sky Safari.
 
-hbs: The Express view engine for Handlebars.
+## API
+### Get all trips
+- Method: `GET`
+- Endpoint: `/api/trips`
+- Response: JSON array of trip objects from MongoDB
 
-cookie-parser: Middleware to parse the Cookie header and populate req.cookies.
+Example:
+```bash
+curl http://localhost:3000/api/trips
+```
 
-morgan: HTTP request logger middleware for Node.js.
+## Admin Interface
+Trip administration is available at:
+- `http://localhost:3000/admin/trips`
+- `http://localhost:3000/admin/trips/new`
 
-http-errors: Helper for creating HTTP errors for Express.
+Rooms and Meals add forms are available at:
+- `http://localhost:3000/admin/rooms/new`
+- `http://localhost:3000/admin/meals/new`
 
-These dependencies will be automatically installed when you run npm install during the setup process.
+Note: Authentication is intentionally not implemented yet for coursework scope.
+
+## Verification and Testing
+Run these checks after startup:
+
+```bash
+curl http://localhost:3000/api/trips
+curl -I http://localhost:3000/travel
+mongosh travlr --eval "db.trips.find({}, {name:1, price:1, date:1}).pretty()"
+```
+
+Expected outcomes:
+- `/api/trips` returns trip records in JSON format.
+- `/travel` returns `HTTP/1.1 200 OK`.
+- `mongosh` output includes the seeded trip documents.
+
+## Scripts
+- `npm start` - start the Express server.
+- `npm run seed` - seed sample trips into MongoDB.
+
+## Known Notes
+- Some templates may still request `/stylesheets/style.css`; current styling is served from `/css/style.css`.
+
+## Course Context
+This project was developed for CS-465 Full Stack Development I at Southern New Hampshire University.

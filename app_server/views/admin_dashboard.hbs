@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="background">
+    <div id="page">
+      <div id="header">
+        <div id="logo">
+          <a href="/"><img src="/images/logo.png" alt="LOGO" height="100" width="200"></a>
+        </div>
+        {{> top_nav activeAdmin=true}}
+      </div>
+      <div id="contents">
+        <div class="box">
+          <div class="body">
+            <h1>{{title}}</h1>
+            <p>Manage travel data from this centralized admin area.</p>
+            <ul>
+              <li><a href="/admin/trips">Manage Trips</a></li>
+              <li><a href="/admin/rooms">Manage Rooms</a></li>
+              <li><a href="/admin/meals">Manage Meals</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
