@@ -85,9 +85,15 @@ Module 4 walkthrough note:
 - Endpoint: `/api/trips`
 - Response: JSON array of trip objects from MongoDB
 
+### Get all travel documents
+- Method: `GET`
+- Endpoint: `/api/travel`
+- Response: JSON array of inserted documents from the MongoDB `travel` collection
+
 Example:
 ```bash
 curl http://localhost:3000/api/trips
+curl http://localhost:3000/api/travel
 ```
 
 ## Admin Interface

@@ -12,6 +12,19 @@ var tripsList = async function(req, res) {
   }
 };
 
+var travelList = async function(req, res) {
+  try {
+    var trips = await Trip.find({}).lean();
+    res.json(trips);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error retrieving travel documents from database',
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   tripsList: tripsList,
+  travelList: travelList,
 };
