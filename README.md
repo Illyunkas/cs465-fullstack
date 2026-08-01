@@ -28,13 +28,13 @@ app.js
 app_api/
    controllers/
       trips.js
-   routes/
-      index.js
-app_server/
    models/
       db.js
       travlr.js
       seed.js
+   routes/
+      index.js
+app_server/
    controllers/
    routes/
    views/
@@ -76,8 +76,8 @@ npm run seed
 
 This inserts four sample trips including Volcanic Sky Safari.
 
-Module 4 walkthrough note:
-- The seed script is located in `app_server/models/seed.js` and is executed with `node app_server/models/seed.js` (also available through `npm run seed`).
+Module 5 structure note:
+- The seed script is located in `app_api/models/seed.js` and is executed with `node app_api/models/seed.js` (also available through `npm run seed`).
 
 ## API
 ### Get all trips
@@ -85,16 +85,38 @@ Module 4 walkthrough note:
 - Endpoint: `/api/trips`
 - Response: JSON array of trip objects from MongoDB
 
-### Get all travel documents
+### Get specific trip by code
 - Method: `GET`
-- Endpoint: `/api/travel`
-- Response: JSON array of inserted documents from the MongoDB `travel` collection
+- Endpoint: `/api/trips/:tripCode`
+- Response: JSON object for a single trip
+- Notes:
+   - Returns `404` if the trip code is not found.
+   - Returns `500` for server/database errors.
 
 Example:
 ```bash
 curl http://localhost:3000/api/trips
-curl http://localhost:3000/api/travel
+curl http://localhost:3000/api/trips/GRA-001
 ```
+
+## Module 5 Testing (Postman or curl)
+Use these requests to verify route behavior and retrieval logic.
+
+```bash
+# 1) Collection request (GET all)
+curl -i http://localhost:3000/api/trips
+
+# 2) Specific trip request by code (GET one)
+curl -i http://localhost:3000/api/trips/GRA-001
+
+# 3) Not found handling (expect 404)
+curl -i http://localhost:3000/api/trips/NO-SUCH-CODE
+```
+
+Expected outcomes:
+- `GET /api/trips` returns `200` with a JSON array.
+- `GET /api/trips/:tripCode` returns `200` with one JSON trip object when found.
+- `GET /api/trips/:tripCode` returns `404` with JSON error message when not found.
 
 ## Admin Interface
 Trip administration is available at:
@@ -113,13 +135,15 @@ Run these checks after startup:
 ```bash
 curl http://localhost:3000/api/trips
 curl -I http://localhost:3000/travel
-mongosh travlr --eval "db.trips.find({}, {code:1, name:1, length:1, start:1, resort:1, perPerson:1}).pretty()"
+mongosh travlr --eval "db.travel.find({}, {code:1, name:1, length:1, start:1, resort:1, perPerson:1}).pretty()"
 ```
 
 Expected outcomes:
 - `/api/trips` returns trip records in JSON format.
 - `/travel` returns `HTTP/1.1 200 OK`.
 - `mongosh` output includes the seeded trip documents with fields such as `code`, `name`, `length`, `start`, `resort`, and `perPerson`.
+
+For collection verification in MongoDB, use `db.travel` because the Mongoose schema maps to the `travel` collection.
 
 ## Scripts
 - `npm start` - start the Express server.

@@ -1,6 +1,6 @@
 var fs = require('fs');
 var path = require('path');
-var Trip = require('../models/travlr');
+var Trip = require('../../app_api/models/travlr');
 
 var tripsFile = path.join(__dirname, '../../data/trips.json');
 var roomsFile = path.join(__dirname, '../../data/rooms.json');

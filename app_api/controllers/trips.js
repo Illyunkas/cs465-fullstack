@@ -1,24 +1,46 @@
-var Trip = require('../../app_server/models/travlr');
+var Trip = require('../models/travlr');
+
+var sendJsonResponse = function(res, status, content) {
+  res.status(status);
+  res.json(content);
+};
 
 var tripsList = async function(req, res) {
   try {
     var trips = await Trip.find({}).lean();
-    res.json(trips);
+    sendJsonResponse(res, 200, trips);
   } catch (error) {
-    res.status(500).json({
+    sendJsonResponse(res, 500, {
       message: 'Error retrieving trips from database',
       error: error.message,
     });
   }
 };
 
-var travelList = async function(req, res) {
+var tripsFindCode = async function(req, res) {
+  var tripCode = req.params.tripCode;
+
+  if (!tripCode) {
+    sendJsonResponse(res, 400, {
+      message: 'tripCode parameter is required',
+    });
+    return;
+  }
+
   try {
-    var trips = await Trip.find({}).lean();
-    res.json(trips);
+    var matches = await Trip.find({ code: tripCode }).lean();
+
+    if (!matches || matches.length === 0) {
+      sendJsonResponse(res, 404, {
+        message: 'Trip not found',
+      });
+      return;
+    }
+
+    sendJsonResponse(res, 200, matches[0]);
   } catch (error) {
-    res.status(500).json({
-      message: 'Error retrieving travel documents from database',
+    sendJsonResponse(res, 500, {
+      message: 'Error retrieving trip from database',
       error: error.message,
     });
   }
@@ -26,5 +48,5 @@ var travelList = async function(req, res) {
 
 module.exports = {
   tripsList: tripsList,
-  travelList: travelList,
+  tripsFindCode: tripsFindCode,
 };

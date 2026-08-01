@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define the trip schema using Module 4 walkthrough fields.
 const tripSchema = new mongoose.Schema({
   code: { type: String, required: true, index: true },
   name: { type: String, required: true, index: true },
@@ -12,6 +11,4 @@ const tripSchema = new mongoose.Schema({
   description: { type: String, required: true },
 }, { collection: 'travel' });
 
-const Trip = mongoose.model('Travel', tripSchema);
-
-module.exports = Trip;
+module.exports = mongoose.model('Trip', tripSchema);
