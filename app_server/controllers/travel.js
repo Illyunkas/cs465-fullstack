@@ -1,5 +1,6 @@
 var travel = async (req, res) => {
-    var tripsEndpoint = 'http://localhost:3000/api/trips';
+    var baseUrl = `${req.protocol}://${req.get('host')}`;
+    var tripsEndpoint = `${baseUrl}/api/trips`;
     var options = {
         method: 'GET',
         headers: {
