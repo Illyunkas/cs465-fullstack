@@ -4,6 +4,6 @@ var tripsController = require('../controllers/trips');
 
 // Standardized REST routes for trip resources.
 router.get('/trips', tripsController.tripsList);
-router.get('/trips/:tripCode', tripsController.tripsFindCode);
+router.get('/trips/:tripId', tripsController.tripsFindOne);
 
 module.exports = router;

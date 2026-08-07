@@ -1,4 +1,5 @@
 var Trip = require('../models/travlr');
+var mongoose = require('mongoose');
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -17,18 +18,24 @@ var tripsList = async function(req, res) {
   }
 };
 
-var tripsFindCode = async function(req, res) {
-  var tripCode = req.params.tripCode;
+var tripsFindOne = async function(req, res) {
+  var tripId = req.params.tripId;
 
-  if (!tripCode) {
+  if (!tripId) {
     sendJsonResponse(res, 400, {
-      message: 'tripCode parameter is required',
+      message: 'tripId parameter is required',
     });
     return;
   }
 
   try {
-    var matches = await Trip.find({ code: tripCode }).lean();
+    var matches;
+
+    if (mongoose.Types.ObjectId.isValid(tripId)) {
+      matches = await Trip.find({ _id: tripId }).lean();
+    } else {
+      matches = await Trip.find({ code: tripId }).lean();
+    }
 
     if (!matches || matches.length === 0) {
       sendJsonResponse(res, 404, {
@@ -48,5 +55,5 @@ var tripsFindCode = async function(req, res) {
 
 module.exports = {
   tripsList: tripsList,
-  tripsFindCode: tripsFindCode,
+  tripsFindOne: tripsFindOne,
 };
