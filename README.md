@@ -1,156 +1,174 @@
-# Travlr Getaways (CS-465)
+# Travlr Getaways
 
-Travlr Getaways is a Node.js and Express web application for browsing and managing travel content. The project now includes MongoDB integration through Mongoose for trip data storage, schema validation, and API delivery.
+Travlr Getaways is a full-stack travel site with two parts:
 
-## Features
-- Server-rendered pages for Travel, Rooms, Meals, and supporting static content pages.
-- Admin trip management for creating and editing trip records.
-- MongoDB-backed trip model with validation.
-- JSON API endpoint for trip retrieval.
-- Seed script for loading sample data into MongoDB.
+1. An Express server that renders the public pages and exposes the trip API.
+2. A separate Angular admin app that consumes the API for trip CRUD work.
 
-## Tech Stack
-- Node.js
-- Express
-- Handlebars (`hbs`)
-- MongoDB
-- Mongoose
+The trip data is stored in MongoDB through Mongoose. Public pages show trip information from the database, and the admin app can list, add, edit, and delete trips through `/api/trips`.
 
-## Prerequisites
-- Node.js 18+ (LTS recommended)
-- npm
-- MongoDB server (local or remote)
-- `mongosh` (for inspection/testing)
+## How It Works
 
-## Project Structure
+- `app.js` starts the Express application, connects MongoDB, mounts the public routes, and mounts the API routes.
+- `app_server/` contains the server-rendered site used for pages like Travel, Rooms, Meals, About, Contact, and News.
+- `app_api/` contains the JSON API used by both the public site and the Angular admin app.
+- `app_admin/` is the Angular SPA used for the Module 6 admin workflow.
+- The Angular app calls `/api/trips` through a dev-server proxy so it can talk to the backend without hardcoding hostnames.
+
+## Project Layout
+
 ```text
-app.js
-app_api/
-   controllers/
+travlr/
+  app.js
+  bin/www
+  app_api/
+    controllers/
       trips.js
-   models/
+    models/
       db.js
-      travlr.js
       seed.js
-   routes/
+      travlr.js
+    routes/
       index.js
-app_server/
-   controllers/
-   routes/
-   views/
-data/
-   trips.json
+  app_server/
+    controllers/
+    models/
+    routes/
+    views/
+  public/
+  data/
+  app_admin/
 ```
 
-## Installation
+## Requirements
+
+- Node.js 18+ is recommended.
+- npm
+- MongoDB running locally or available through `MONGODB_URI`.
+
+## Install
+
+From the repository root:
+
 ```bash
-git clone https://github.com/Illyunkas/cs465-fullstack.git
-cd cs465-fullstack/travlr
+npm install
+cd app_admin
 npm install
 ```
 
-## Configuration
-Set the MongoDB host with an environment variable (optional if using local default).
+## Run the Project
 
-```bash
-export DB_HOST="127.0.0.1"
-```
+Start the backend from the repository root:
 
-Default URI (when `DB_HOST` is not set):
-`mongodb://127.0.0.1/travlr`
-
-## Running the Application
 ```bash
 npm start
 ```
 
-Application URL:
-`http://localhost:3000`
+The Express site runs at:
 
-## Database Seeding
-Load sample trip data into MongoDB:
+```text
+http://localhost:3000
+```
+
+Start the Angular admin app in a second terminal:
+
+```bash
+cd app_admin
+npm start
+```
+
+The admin app runs at:
+
+```text
+http://localhost:4200
+```
+
+## Data Setup
+
+Seed MongoDB with the sample trips:
 
 ```bash
 npm run seed
 ```
 
-This inserts four sample trips including Volcanic Sky Safari.
+The trip collection is mapped to `travel` in MongoDB.
 
-Module 5 structure note:
-- The seed script is located in `app_api/models/seed.js` and is executed with `node app_api/models/seed.js` (also available through `npm run seed`).
+## Public Site
+
+The server-rendered site is under `app_server/`.
+
+- Travel page: `/travel`
+- Rooms page: `/rooms`
+- Meals page: `/meals`
+- Static pages: `/about`, `/contact`, `/news`
+
+These pages use Handlebars views and partials from `app_server/views/partials`.
 
 ## API
-### Get all trips
-- Method: `GET`
-- Endpoint: `/api/trips`
-- Response: JSON array of trip objects from MongoDB
 
-### Get specific trip by code
-- Method: `GET`
-- Endpoint: `/api/trips/:tripCode`
-- Response: JSON object for a single trip
-- Notes:
-   - Returns `404` if the trip code is not found.
-   - Returns `500` for server/database errors.
+The trip API is mounted under `/api`.
 
-Example:
-```bash
-curl http://localhost:3000/api/trips
-curl http://localhost:3000/api/trips/GRA-001
-```
+### Trips
 
-## Module 5 Testing (Postman or curl)
-Use these requests to verify route behavior and retrieval logic.
+- `GET /api/trips` returns all trips as JSON.
+- `GET /api/trips/:tripCode` returns one trip by code.
+- `POST /api/trips` creates a trip.
+- `PUT /api/trips/:tripCode` updates a trip by code.
+- `DELETE /api/trips/:tripCode` deletes a trip by code.
+
+The API returns `404` when a trip code is not found and `409` when a duplicate trip code is submitted.
+
+### Example Checks
 
 ```bash
-# 1) Collection request (GET all)
 curl -i http://localhost:3000/api/trips
-
-# 2) Specific trip request by code (GET one)
 curl -i http://localhost:3000/api/trips/GRA-001
-
-# 3) Not found handling (expect 404)
 curl -i http://localhost:3000/api/trips/NO-SUCH-CODE
 ```
 
-Expected outcomes:
-- `GET /api/trips` returns `200` with a JSON array.
-- `GET /api/trips/:tripCode` returns `200` with one JSON trip object when found.
-- `GET /api/trips/:tripCode` returns `404` with JSON error message when not found.
+## Angular Admin App
 
-## Admin Interface
-Trip administration is available at:
-- `http://localhost:3000/admin/trips`
-- `http://localhost:3000/admin/trips/new`
+The Angular app in `app_admin/` is the Module 6 trip manager.
 
-Rooms and Meals add forms are available at:
-- `http://localhost:3000/admin/rooms/new`
-- `http://localhost:3000/admin/meals/new`
+- Trip listing loads trips from the API and displays cards.
+- Add Trip creates new trip records.
+- Edit Trip loads an existing trip, patches the form, and sends updates.
+- Delete Trip removes a record and refreshes the list.
 
-Note: Authentication is intentionally not implemented yet for coursework scope.
+The admin app uses a dev proxy so requests to `/api/trips` go to the backend on port 3000.
 
-## Verification and Testing
-Run these checks after startup:
+## Verification
+
+After both servers are running, these checks should work:
 
 ```bash
 curl http://localhost:3000/api/trips
 curl -I http://localhost:3000/travel
+```
+
+You can also inspect MongoDB directly:
+
+```bash
 mongosh travlr --eval "db.travel.find({}, {code:1, name:1, length:1, start:1, resort:1, perPerson:1}).pretty()"
 ```
 
-Expected outcomes:
-- `/api/trips` returns trip records in JSON format.
-- `/travel` returns `HTTP/1.1 200 OK`.
-- `mongosh` output includes the seeded trip documents with fields such as `code`, `name`, `length`, `start`, `resort`, and `perPerson`.
-
-For collection verification in MongoDB, use `db.travel` because the Mongoose schema maps to the `travel` collection.
-
 ## Scripts
-- `npm start` - start the Express server.
-- `npm run seed` - seed sample trips into MongoDB.
 
-## Known Notes
-- Some templates may still request `/stylesheets/style.css`; current styling is served from `/css/style.css`.
+Root project:
+
+- `npm start` starts the Express app.
+- `npm run seed` seeds the trip collection.
+
+Angular admin app:
+
+- `npm start` starts the Angular dev server.
+- `npm run build` builds the admin app.
+
+## Notes
+
+- Authentication is not implemented for the coursework scope.
+- Some browser consoles may show a Bootstrap CDN integrity warning; it does not block the admin app from loading the trip data.
 
 ## Course Context
+
 This project was developed for CS-465 Full Stack Development I at Southern New Hampshire University.
