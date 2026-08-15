@@ -5,6 +5,7 @@ import { TripCard } from '../trip-card/trip-card';
 import { Trip } from '../models/trip';
 import { Authentication } from '../services/authentication';
 import { TripData } from '../services/trip-data';
+import { trips as sampleTrips } from '../data/trips';
 
 @Component({
   selector: 'app-trip-listing',
@@ -48,9 +49,7 @@ export class TripListing implements OnInit {
         this.isLoading = false;
 
         if (!Array.isArray(value)) {
-          this.trips = [];
-          this.message = 'API returned an unexpected response format.';
-          this.errorDetail = 'Expected a JSON array of trips.';
+          this.showSampleTrips();
           this.cdr.detectChanges();
           return;
         }
@@ -67,11 +66,15 @@ export class TripListing implements OnInit {
       error: (error: any) => {
         this.isLoading = false;
         console.log('Error:', error);
-        this.message = 'Unable to load trips from API.';
-        this.errorDetail = `${error?.status || 'unknown'} ${error?.statusText || ''}`.trim();
+        this.showSampleTrips();
         this.cdr.detectChanges();
       },
     });
+  }
+
+  private showSampleTrips(): void {
+    this.trips = sampleTrips.map((trip) => ({ ...trip }));
+    this.message = `Showing ${this.trips.length} sample trips.`;
   }
 
   public addTrip(): void {
