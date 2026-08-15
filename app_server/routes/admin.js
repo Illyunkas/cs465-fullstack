@@ -1,6 +1,27 @@
 var express = require('express');
+var jwt = require('jsonwebtoken');
 var router = express.Router();
 var adminController = require('../controllers/admin');
+
+function authenticateJWT(req, res, next) {
+	var authHeader = req.headers.authorization;
+
+	if (!authHeader || !authHeader.startsWith('Bearer ')) {
+		return res.status(401).json({ message: 'Bearer token required' });
+	}
+
+	var token = authHeader.slice(7);
+	jwt.verify(token, process.env.JWT_SECRET, function(error, decoded) {
+		if (error) {
+			return res.status(401).json({ message: 'Invalid or expired token' });
+		}
+
+		req.auth = decoded;
+		return next();
+	});
+}
+
+router.use(authenticateJWT);
 
 router.get('/', adminController.dashboard);
 
