@@ -80,7 +80,7 @@ In a second terminal, start the Angular admin SPA:
 npm --prefix app_admin start
 ```
 
-The admin SPA is available at `http://localhost:4200`. Its development proxy forwards `/api` requests to `http://localhost:3000`, so both servers must be running for admin functionality.
+The admin SPA is available at `http://localhost:4200`. Its development proxy forwards `/api` requests to `http://localhost:3000`, so both servers must be running to load live data and make changes. If the API is unavailable, the trip listing displays bundled sample trips so the interface remains viewable.
 
 ## Application Areas
 
