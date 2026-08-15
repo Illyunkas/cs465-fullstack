@@ -6,7 +6,7 @@
 		<p class="card-text mb-1">{{ trip.length }}</p>
 		<p class="card-text fw-semibold">{{ priceValue(trip.perPerson) | currency:'USD':'symbol' }} per person</p>
 		<p class="card-text small">{{ trip.description }}</p>
-		<div class="mt-auto d-flex gap-2">
+		<div *ngIf="isLoggedIn()" class="mt-auto d-flex gap-2">
 			<button class="btn btn-sm btn-outline-primary" type="button" (click)="editTrip(trip)">Edit Trip</button>
 			<button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteTrip(trip)">Delete Trip</button>
 		</div>

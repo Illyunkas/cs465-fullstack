@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Trip } from '../models/trip';
+import { Authentication } from '../services/authentication';
 import { TripData } from '../services/trip-data';
 
 @Component({
@@ -17,6 +18,7 @@ export class TripCard {
   constructor(
     private router: Router,
     private tripDataService: TripData,
+    private authentication: Authentication,
   ) {}
 
   editTrip(trip: Trip): void {
@@ -51,5 +53,9 @@ export class TripCard {
 
   priceValue(price: string): number {
     return Number(price.replace(/[^0-9.]/g, '')) || 0;
+  }
+
+  isLoggedIn(): boolean {
+    return this.authentication.isLoggedIn();
   }
 }

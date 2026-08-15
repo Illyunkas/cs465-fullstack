@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TripCard } from '../trip-card/trip-card';
 import { Trip } from '../models/trip';
+import { Authentication } from '../services/authentication';
 import { TripData } from '../services/trip-data';
 
 @Component({
@@ -20,6 +21,7 @@ export class TripListing implements OnInit {
 
   constructor(
     private tripDataService: TripData,
+    private authentication: Authentication,
     private router: Router,
     private cdr: ChangeDetectorRef,
   ) {}
@@ -74,5 +76,9 @@ export class TripListing implements OnInit {
 
   public addTrip(): void {
     this.router.navigate(['add-trip']);
+  }
+
+  isLoggedIn(): boolean {
+    return this.authentication.isLoggedIn();
   }
 }
