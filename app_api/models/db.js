@@ -1,17 +1,38 @@
 const mongoose = require('mongoose');
 const readLine = require('readline');
+const fs = require('fs');
+const path = require('path');
 
 const host = process.env.DB_HOST || '127.0.0.1';
 const dbURI = `mongodb://${host}/travlr`;
 
 const connect = () => {
-  setTimeout(() => {
-    mongoose.connect(dbURI, {});
-  }, 1000);
+  mongoose.connect(dbURI, {});
+};
+
+// Auto-seed the trips collection if it's empty so data is available right after startup.
+const seedIfEmpty = async () => {
+  const Trip = require('./travlr');
+
+  try {
+    const count = await Trip.countDocuments({});
+    if (count > 0) return;
+
+    const tripsFile = path.join(__dirname, '../../data/trips.json');
+    const trips = JSON.parse(fs.readFileSync(tripsFile, 'utf8') || '[]');
+
+    if (trips.length > 0) {
+      await Trip.insertMany(trips);
+      console.log(`Auto-seeded ${trips.length} trips into empty database`);
+    }
+  } catch (error) {
+    console.log('Auto-seed check failed:', error.message);
+  }
 };
 
 mongoose.connection.on('connected', () => {
   console.log(`Mongoose connected to ${dbURI}`);
+  seedIfEmpty();
 });
 
 mongoose.connection.on('error', err => {
