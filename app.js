@@ -1,27 +1,33 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var hbs = require('hbs');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var passport = require('passport');
+
+// Load environment variables from .env file
 require('dotenv').config();
+
+// Define database connection (Module 5 update due to folder relocation)
 require('./app_api/models/db');
+
+var indexRouter = require('./app_server/routes/index');
+var usersRouter = require('./app_server/routes/users');
+var travelRouter = require('./app_server/routes/travel');
+var apiRouter = require('./app_api/routes/index'); // API Router (Module 5)
+
+var handlebars = require('hbs');
+var passport = require('passport');
 require('./app_api/config/passport');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
-app.set('view engine', 'hbs');
-hbs.registerPartials(path.join(__dirname, 'app_server', 'views', 'partials'));
 
-// added variable required "travelRouter"
-var travelRouter = require('./app_server/routes/travel'); 
-var apiRouter = require('./app_api/routes/index');
-var indexRouter = require('./app_server/routes/index');
-var usersRouter = require('./app_server/routes/users');
-var adminRouter = require('./app_server/routes/admin');
+// register handlebars partials
+handlebars.registerPartials(path.join(__dirname, 'app_server', 'views/partials'));
+
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,26 +36,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
-app.use('/api', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(204);
-  }
-
-  next();
-});
-
-// add app uses
-app.use('/travel', travelRouter);
-app.use('/api', apiRouter);
+// Wire-up Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/admin', adminRouter);
-
-
+app.use('/travel', travelRouter);
+app.use('/api', apiRouter); // Wire-up API routes (Module 5)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
