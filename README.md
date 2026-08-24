@@ -179,3 +179,39 @@ travlr/
 ## Course Context
 
 This project was developed for CS-465 Full Stack Development I at Southern New Hampshire University.
+
+# CS 465 Full Stack Development: Travlr Getaways Portfolio
+
+## Module 8 journal
+
+## Architecture
+
+**Frontend Approaches (Express HTML, JavaScript, SPA):**  
+  In this project, the customer-facing side uses server-side rendering via **Express and Handlebars (HBS)** templates, where the server constructs HTML pages and serves them directly to the client. This approach is lightweight, SEO-friendly, and ideal for static or infrequently updated content. In contrast, the administrative panel (`app_admin`) is built as an **Angular Single-Page Application (SPA)** using client-side JavaScript/TypeScript. The SPA loads a single HTML shell and dynamically updates views via component routing and API requests without full page reloads, providing a faster, richer, and more interactive experience for admin operations like managing trips.
+
+**NoSQL Backend (MongoDB):**  
+  MongoDB was chosen for the backend because its document-oriented model maps naturally to JavaScript and JSON data structures. Travel records (such as trips, itineraries, pricing, and resort details) often contain semi-structured or nested data that can evolve. MongoDB provides schema flexibility, high write throughput, and seamless integration with Mongoose ODM in Node.js, eliminating the need for complex SQL schema migrations and relational joins.
+
+---
+
+## Functionality
+
+* **JSON vs. JavaScript & Frontend/Backend Integration:**  
+  JavaScript is a full programming language with functions, objects, and logic execution, whereas **JSON (JavaScript Object Notation)** is a lightweight, text-based data interchange format. JSON acts as the universal bridge between the decoupled layers: the Express API serializes database models into JSON strings and delivers them across HTTP, and the frontend (both Angular and Handlebars helpers) parses that JSON back into native objects to render dynamic UI content.
+
+* **Code Refactoring & Reusable UI Components:**  
+  Throughout development, code was refactored from tightly coupled server routes into a clear separation of concerns—splitting business logic into dedicated API controllers (`app_api`), server-side display controllers (`app_server`), and Angular services. In the Angular admin app, creating reusable UI components (such as modular form inputs, trip listing cards, and authentication guards) reduced redundant code, simplified maintenance, and ensured consistent design and validation behavior across create, edit, and view states.
+
+---
+
+## Testing
+
+* **API Endpoints, HTTP Methods & Security:**  
+  Robust full-stack applications require verifying CRUD operations across all standard HTTP methods: `GET` (retrieving trip lists and details), `POST` (creating records and user authentication), `PUT` (updating existing trips), and `DELETE` (removing data). Tools like Postman allowed endpoint testing prior to frontend integration to validate status codes (200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 404 Not Found) and payload integrity. Testing becomes significantly more complex with authentication layers: protected endpoints require generating, passing, and validating **JSON Web Tokens (JWT)** in the `Authorization: Bearer <token>` header, ensuring unauthorized requests are rejected while maintaining persistent sessions for legitimate admins.
+
+---
+
+## Reflection
+
+* **Professional Alignment & Marketable Skills:**  
+  Building the full-stack Travlr Getaways application provided practical, end-to-end experience spanning RESTful API design, modern SPA development with Angular, Mongoose data modeling, and secure JWT-based role authentication. Gaining hands-on proficiency across the full MEAN stack demonstrates my ability to architect decoupled, production-ready web systems. These skills directly strengthen my portfolio as a software engineer capable of delivering secure, scalable, and maintainable software solutions.
